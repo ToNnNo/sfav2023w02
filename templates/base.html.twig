@@ -1,19 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+        {{ encore_entry_link_tags('app') }}
+        {% for file in encore_entry_css_files('common') %}
+            <link rel="stylesheet" href="{{ file }}" />
+        {% endfor %}
+        {{ encore_entry_script_tags('app') }}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+        {% block stylesheets %}{% endblock %}
+        {% block javascripts %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="container-fluid">
+            <header class="pt-5">
+                <h1>Formation Symfony Av <small>MCA</small></h1>
+                <hr />
+            </header>
+            <nav class="nav">
+                <a class="nav-link" href="{{ path('home_index') }}">Accueil</a>
+                <a class="nav-link" href="{{ path('webpack_index') }}">Webpack</a>
+
+                <div class="dropdown">
+                    <button class="btn btn-link nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Cache
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('cache_psr6') }}">Cache PSR6</a></li>
+                        <li><a class="dropdown-item" href="{{ path('cache_contract') }}">Cache Contract</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-link nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Event
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('event_index') }}">Kernel Request Event</a></li>
+                        <li><a class="dropdown-item" href="{{ path('event_custom') }}">Custom Event</a></li>
+                    </ul>
+                </div>
+
+                <a class="nav-link" href="{{ path('worker_index') }}">Worker</a>
+                <div class="dropdown">
+                    <button class="btn btn-link nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Mail
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('worker_mail') }}">Mail Async</a></li>
+                        <li><a class="dropdown-item" href="{{ path('worker_mail_sync') }}">Mail Sync</a></li>
+                        <li><a class="dropdown-item" href="{{ path('worker_mail_mixed') }}">Mail Sync & async</a></li>
+                        <li><a class="dropdown-item" href="{{ path('worker_mail_attachment') }}">Mail avec pièce jointe</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-link nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Service
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('service_index') }}">Service avec interface</a></li>
+                        <li><a class="dropdown-item" href="{{ path('service_html') }}">Service avec binding</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-link nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Form
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('post_index') }}">Liste des articles (Data Transformer + Form Event)</a></li>
+                        <li><a class="dropdown-item" href="{{ path('contact_index') }}">Contact (Data Mapper)</a></li>
+                    </ul>
+                </div>
+
+            </nav>
+            <main>
+                {% block body %}{% endblock %}
+            </main>
+            <footer>
+                <p class="small text-center">Symfony Av - Lille - Janvier 2023</p>
+            </footer>
+        </div>
     </body>
 </html>

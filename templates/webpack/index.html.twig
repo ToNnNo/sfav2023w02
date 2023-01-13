@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Webpack{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('webpack') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('webpack') }}
+{% endblock %}
+
+{% block body %}
+    <!-- https://symfony.com/doc/current/frontend.html -->
+    <h2 class="title-h1">Webpack</h2>
+
+    <!-- p>lorem + tab (emmet.io) -->
+    <p class="evidence">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque eos fugiat inventore iste itaque, iusto
+        laboriosam magni nesciunt nisi nostrum nulla obcaecati officiis perspiciatis ullam vel veniam, voluptas
+        voluptate.</p>
+
+    <img src="{{ asset('build/images/films/avengers.jpg') }}" alt="Affiche du film Avengers" />
+{% endblock %}

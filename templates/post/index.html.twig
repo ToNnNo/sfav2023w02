@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <h2>Article</h2>
+
+    <div class="mb-3 text-end">
+        <a href="{{ path('post_add') }}" class="btn btn-outline-primary">Ajouter</a>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="width: 5%">ID</th>
+            <th>Title</th>
+            <th>Résumé</th>
+            <th>Tags</th>
+            <th style="width: 15%"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.summary ?? post.body | u.truncate(14, ' ...')}}</td>
+                <td>{{ post.tags|join(', ') }}</td>
+                <td>
+                    <a href="{{ path('post_edit', {id: post.id}) }}">Modifier</a>
+                    <a href="">Supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="5" class="text-center">No Data</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

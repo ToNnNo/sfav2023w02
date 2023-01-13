@@ -6,10 +6,36 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
+
+        admin_in_memory:
+            memory:
+                users:
+                    admin: { password: '$2y$13$1JTDrDKjepqk.cFkJ45eZeYlwA7waGZozEud1P0/RyPOM8JuJag5u', roles: ['ROLE_ADMIN'] }
+                    user: { password: '$2y$13$MkReoSWd1gFoN4sOFhx02emjwwclsWnrUiDMvaC5016IocwGyFbTO', roles: ['ROLE_USER'] }
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        login:
+            pattern: ^/api/login
+            stateless: true
+            provider: admin_in_memory
+            json_login:
+                check_path: /api/login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        api:
+            pattern: ^/api
+            stateless: true
+            provider: admin_in_memory
+            jwt: ~
+
         main:
             lazy: true
             provider: users_in_memory
@@ -23,7 +49,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:

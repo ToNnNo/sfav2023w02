@@ -1,0 +1,13 @@
+{% use 'form_div_layout.html.twig' %}
+
+{% block extra_text_widget %}
+    <div class="input-group">
+        {% if start_input %}
+            <span class="input-group-text">{{ start_input_html ? start_input | raw : start_input }}</span>
+        {% endif %}
+        {{ block('form_widget_simple') }}
+        {% if end_input %}
+            <span class="input-group-text">{{ end_input }}</span>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cache Système{% endblock %}
+
+{% block body %}
+    <h2>{{ title }}</h2>
+
+    <p class="lead">Contenu du fichier Markdown en HTML</p>
+    <section class="bg-light border p-2 rounded-1">
+        {{ markdownToHTML | raw }}
+    </section>
+{% endblock %}
